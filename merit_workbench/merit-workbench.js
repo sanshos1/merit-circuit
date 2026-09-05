@@ -7,7 +7,7 @@ const reader=createClient({chain:studionet,endpoint:ENDPOINT,account:createAccou
 const root=document.createElement('main'); root.className='review-sheet';
 root.innerHTML=`<style>
 *{box-sizing:border-box}body{margin:0;background:#d8d4cb;color:#141414;font:16px Arial,sans-serif}
-.review-sheet{width:min(1180px,calc(100% - 36px));margin:18px auto;background:#f7f4ea;min-height:calc(100vh - 36px);border:1px solid #141414;box-shadow:10px 10px 0 #141414}
+.review-sheet{display:block;width:min(1180px,calc(100% - 36px));margin:18px auto;padding:0;background:#f7f4ea;min-height:calc(100vh - 36px);border:1px solid #141414;box-shadow:10px 10px 0 #141414}
 .mast{display:grid;grid-template-columns:170px 1fr auto;border-bottom:3px solid #141414}.mast>*{padding:22px;border-right:1px solid #141414}.mast>*:last-child{border:0}
 .serial{font:700 13px ui-monospace,monospace;letter-spacing:.12em}h1{margin:0;font:900 clamp(2rem,5vw,4.5rem)/.9 Arial,sans-serif;letter-spacing:-.06em}
 .badge{align-self:center;background:#2457ff;color:#fff;padding:13px 18px;font-weight:900;transform:rotate(2deg)}
