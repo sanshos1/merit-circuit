@@ -1,0 +1,37 @@
+{
+  "id": "MC-1788577518",
+  "transactions": {
+    "open": "0x1b0f7f68e4dab27860d47b8cf3207520b5297e5c6c44ed3ca225351620adfb66",
+    "score": "0x4aab9fa74a17ee0c9c1ca5afac981b2f203f11a12409333c77fd08c0701b56b5",
+    "appeal": "0xb3a59d71cf592756abc0fec9c29d8672984c6aa50f0cb209b27ca6f6d05563ed",
+    "finalize": "0xf06ca2100d75440ccb627872cc3dbcde865f4887f0a86c2b6977cb41e329d2bc"
+  },
+  "state": {
+    "appeal": "https://github.com/sanshos1/merit-circuit/raw/93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/appeal.txt",
+    "components": [
+      {
+        "code": "ADOPTION",
+        "points": 35
+      },
+      {
+        "code": "QUALITY",
+        "points": 50
+      }
+    ],
+    "digests": [
+      "c6260f920de686f967e39ec526e4cb5e22d81f34b1daadd4877f7f8e4f75191b",
+      "6e2bb10aba1fd3759209b8c3d8d7c4c6473128a34bee1a4f758534a28beea0e7",
+      "ea2989352c836467ee49fb304d70ff7af4f6d4459d31e441d473e2422c664b70"
+    ],
+    "id": "MC-1788577518",
+    "maintainer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
+    "scope": "GenLayer SDK contribution",
+    "score": 85,
+    "sources": [
+      "https://raw.githubusercontent.com/sanshos1/merit-circuit/93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/contribution.txt",
+      "https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/attestation.txt"
+    ],
+    "state": "FINAL",
+    "subject": "0xad049e0edc298c97552ed60071a35bfc60181fd4"
+  }
+}
