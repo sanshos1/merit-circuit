@@ -18,7 +18,7 @@ def obj(v):
  return json.loads(s[a:b+1])
 @allow_storage
 @dataclass
-class Epoch:maintainer:Address;subject:Address;scope:str;sources:str;state:str;score:u256;components:str;digests:str;appeal:str
+class Epoch:maintainer:Address;subject:str;scope:str;sources:str;state:str;score:u256;components:str;digests:str;appeal:str
 class MeritCircuit(gl.Contract):
  admin:Address;epochs:TreeMap[str,Epoch]
  def __init__(self):self.admin=gl.message.sender_address
@@ -27,12 +27,12 @@ class MeritCircuit(gl.Contract):
   if k not in self.epochs:raise gl.vm.UserError('[EXPECTED] epoch not found')
   return k,self.epochs[k]
  @gl.public.write
- def open_epoch(self,i:str,subject:Address,scope:str,sources:list[str])->None:
+ def open_epoch(self,i:str,subject:str,scope:str,sources:list[str])->None:
   k=kid(i)
   if k in self.epochs:raise gl.vm.UserError('[EXPECTED] duplicate epoch id')
   p=[url(x) for x in sources]
   if len(p)!=2 or p[0][1]==p[1][1]:raise gl.vm.UserError('[EXPECTED] two independent source hosts required')
-  self.epochs[k]=Epoch(gl.message.sender_address,subject,c(scope,120),json.dumps([x[0] for x in p]),'OPEN',u256(0),'[]','[]','')
+  self.epochs[k]=Epoch(gl.message.sender_address,c(subject,42).lower(),c(scope,120),json.dumps([x[0] for x in p]),'OPEN',u256(0),'[]','[]','')
  def _score(self,e,appeal=''):
   urls=json.loads(e.sources)+([appeal] if appeal else [])
   def run():
@@ -62,7 +62,7 @@ class MeritCircuit(gl.Contract):
  @gl.public.write
  def appeal(self,i:str,evidence:str)->None:
   _,e=self._get(i);u,_=url(evidence)
-  if e.subject!=gl.message.sender_address or e.state!='SCORED':raise gl.vm.UserError('[EXPECTED] subject scored epoch required')
+  if e.subject!=gl.message.sender_address.as_hex.lower() or e.state!='SCORED':raise gl.vm.UserError('[EXPECTED] subject scored epoch required')
   if u in json.loads(e.sources):raise gl.vm.UserError('[EXPECTED] distinct appeal evidence required')
   e.appeal=u;e.state='APPEALED'
  @gl.public.write
@@ -73,4 +73,4 @@ class MeritCircuit(gl.Contract):
   x=self._score(e,e.appeal);e.score=u256(x['score']);e.components=json.dumps(x['components']);e.digests=json.dumps(x['digests']);e.state='FINAL'
  @gl.public.view
  def get_epoch(self,i:str)->dict:
-  k,e=self._get(i);return {'id':k,'maintainer':e.maintainer.as_hex,'subject':e.subject.as_hex,'scope':e.scope,'sources':json.loads(e.sources),'state':e.state,'score':int(e.score),'components':json.loads(e.components),'digests':json.loads(e.digests),'appeal':e.appeal}
+  k,e=self._get(i);return {'id':k,'maintainer':e.maintainer.as_hex,'subject':e.subject,'scope':e.scope,'sources':json.loads(e.sources),'state':e.state,'score':int(e.score),'components':json.loads(e.components),'digests':json.loads(e.digests),'appeal':e.appeal}
