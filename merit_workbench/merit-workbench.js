@@ -24,7 +24,7 @@ input{width:100%;border:1px solid #141414;background:#fffef8;padding:13px;font:i
 </style>
 <header class="mast"><div class="serial">MERIT OFFICE<br>FORM 08</div><div><h1>Contribution<br>review sheet</h1></div><div class="badge">EPOCH OPEN</div></header>
 <div class="workspace"><section class="worksheet">
-<div class="step"><div class="step-no">01</div><div class="fields"><label>Epoch reference<input id="id" value="MC-NEW"></label><label>Subject address<input id="subject" placeholder="0x..."></label><label class="wide">Contribution under review<input id="scope" value="SDK documentation and implementation"></label></div></div>
+<div class="step"><div class="step-no">01</div><div class="fields"><label>Epoch reference<input id="id" placeholder="Enter a unique epoch reference"></label><label>Subject address<input id="subject" placeholder="0x..."></label><label class="wide">Contribution under review<input id="scope" placeholder="Describe the contribution under review"></label></div></div>
 <div class="step"><div class="step-no">02</div><div><div class="formula"><div class="factor">QUALITY EVIDENCE<b>60</b></div><div class="factor">ADOPTION EVIDENCE<b>40</b></div></div><p>Two independent records are fixed to this epoch before scoring.</p></div></div>
 <div class="step"><div class="step-no">03</div><div class="fields"><label class="wide">Appeal record, only when disputed<input id="appeal" placeholder="https://independent-record.example/review"></label></div></div>
 <div class="actions"><button id="open">01 - REGISTER EPOCH</button><button id="scoreBtn">02 - ISSUE SCORE</button><button id="appealBtn">03 - FILE APPEAL</button><button id="finalize">04 - SEAL LEDGER</button></div>
