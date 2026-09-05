@@ -4,4 +4,4 @@ def safe(path,*a,**k):
  try:return _unlink(path,*a,**k)
  except PermissionError:return None
 os.unlink=safe
-CONTRACT='contract/merit_circuit.py'
+CONTRACT='scoring_engine/merit_circuit.py'

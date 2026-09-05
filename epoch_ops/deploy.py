@@ -21,7 +21,7 @@ def address(value):
 def main():
  account=create_account(account_private_key=secret())
  client=create_client(chain=studionet,account=account)
- code=(ROOT/"contract/merit_circuit.py").read_text()
+ code=(ROOT/"scoring_engine/merit_circuit.py").read_text()
  tx=client.deploy_contract(code=code,args=[])
  print('deploy',tx,flush=True)
  receipt=client.wait_for_transaction_receipt(transaction_hash=tx,status=TransactionStatus.ACCEPTED,retries=120,interval=10000)
