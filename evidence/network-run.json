@@ -1,13 +1,17 @@
 {
-  "id": "MC-1788577518",
+  "id": "MC-1788745374",
+  "contract": "0xf1C61C7ef26904e2C390Af3F0eCDcDa0046a5f8d",
+  "sourceCommit": "c77f201118a2f818b29443186d5e45d3eb8b01f7",
+  "earlyFinalizeRejected": true,
   "transactions": {
-    "open": "0x1b0f7f68e4dab27860d47b8cf3207520b5297e5c6c44ed3ca225351620adfb66",
-    "score": "0x4aab9fa74a17ee0c9c1ca5afac981b2f203f11a12409333c77fd08c0701b56b5",
-    "appeal": "0xb3a59d71cf592756abc0fec9c29d8672984c6aa50f0cb209b27ca6f6d05563ed",
-    "finalize": "0xf06ca2100d75440ccb627872cc3dbcde865f4887f0a86c2b6977cb41e329d2bc"
+    "open": "0xd2fc68b7429c9e7b1dc5edc89b7202a30f00120a813d5addfeb43db14bbecfa8",
+    "score": "0xfbf3d228b2527735157f9b722df2ecada4517bab695acad86c90f257d60e1bc9",
+    "appeal": "0xdaf85a34f9ea9c723941d6358634a435937fa2c07b37e5ccca8d38901d255e39",
+    "finalize": "0xdf75b3b1ef816462c752924203886ab2b1d701bd11075de8ec78617934f7a497"
   },
   "state": {
-    "appeal": "https://github.com/sanshos1/merit-circuit/raw/93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/appeal.txt",
+    "appeal": "https://github.com/sanshos1/merit-circuit/raw/c77f201118a2f818b29443186d5e45d3eb8b01f7/evidence/appeal.txt",
+    "appealDeadline": 1788745464,
     "components": [
       {
         "code": "ADOPTION",
@@ -23,15 +27,15 @@
       "6e2bb10aba1fd3759209b8c3d8d7c4c6473128a34bee1a4f758534a28beea0e7",
       "ea2989352c836467ee49fb304d70ff7af4f6d4459d31e441d473e2422c664b70"
     ],
-    "id": "MC-1788577518",
+    "id": "MC-1788745374",
     "maintainer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
     "scope": "GenLayer SDK contribution",
     "score": 85,
     "sources": [
-      "https://raw.githubusercontent.com/sanshos1/merit-circuit/93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/contribution.txt",
-      "https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/attestation.txt"
+      "https://raw.githubusercontent.com/sanshos1/merit-circuit/c77f201118a2f818b29443186d5e45d3eb8b01f7/evidence/contribution.txt",
+      "https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@c77f201118a2f818b29443186d5e45d3eb8b01f7/evidence/attestation.txt"
     ],
     "state": "FINAL",
-    "subject": "0xad049e0edc298c97552ed60071a35bfc60181fd4"
+    "subject": "0x05c0cc3f433f6e296f18117f558fdb9043434793"
   }
 }
