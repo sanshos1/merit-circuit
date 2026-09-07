@@ -1,26 +1,28 @@
 # Merit Circuit
 
-Evidence-weighted contribution epochs with an enforceable subject appeal window.
+## Current replacement deployment
 
-## Current reviewed deployment
+- Owner: sanshos1; signing wallet: 0xAD049E0Edc298C97552eD60071a35bfc60181FD4.
+- StudioNet contract: [0x79aAC36e444cDa73b845AE5129574Ea32e0ce7b5](https://explorer-studio.genlayer.com/address/0x79aAC36e444cDa73b845AE5129574Ea32e0ce7b5).
+- [Public application](https://sanshos1.github.io/merit-circuit/).
+- Deployment and actual-source verification: evidence/deployment.json and evidence/owner-network.json.
 
-- StudioNet: [contract](https://explorer-studio.genlayer.com/address/0x785754092A73fD9d0274b0a751449EdE47b4bf0a).
-- Contract source commit: c97f9a6d5278d265e71c56db227527826a82f8de.
-- [Public workbench](https://sanshos1.github.io/merit-circuit/).
-- Actual deployment transaction code matches the reviewed source; see evidence/deployment-verification.json. Earlier network-run.json is historical.
+New owner-only record MC-OWNER-1788810754 is APPEALED. Its creator and subject are both the sanshos1 wallet. Post-deadline finalization remains pending.
 
-## Rules and consensus
+## Account isolation
 
-An epoch fixes its subject, scope and two configurable HTTPS source URLs on distinct hosts. Distinct hosts do not prove independent ownership. Validators recheck the evidence and exact QUALITY (0–60), ADOPTION (0–40), and total scores. The subject can submit appeal evidence from a third host. Scoring always extends the appeal deadline to at least 86,400 seconds after scoring; a later requested deadline is preserved. Appeals are allowed at the deadline; permissionless finalization is allowed only strictly afterward.
+Only ACCOUNT_3 may sign for this repository. The deployment helper validates its derived address before any transaction. Old smoke scripts are disabled. Each account's projects use only that account's wallet. Multi-party roles are tested locally using synthetic addresses, without reading keys from other accounts. Contract authorization rules remain enforced.
 
-## Reproduce
+Earlier mixed-account deployments are retired. Historical proofs in evidence/retired-mixed-account and prior Git commits are not results for this new address. The earlier finalization automation is paused.
 
-Open the workbench and enter MC-1788806858, then LOAD EPOCH for the actual remediation record. It is APPEALED; the protected deadline is 2026-09-08 18:48:10 UTC. Post-deadline live finalization is pending, not passed.
+## Contract behavior
 
-For a fresh workflow, connect a StudioNet wallet through MetaMask or Rabby. Enter a unique epoch ID, subject address, scope, two actual source URLs and a future requested date. Register, score, load the returned deadline, switch to the subject wallet to appeal, and finalize only after that stored deadline. Keep the same epoch ID when switching roles. Wallet transactions require network fees and the required role.
+An epoch fixes its subject, scope and two configurable HTTPS evidence URLs. Validators check exact QUALITY (0-60), ADOPTION (0-40) and total values. Scoring grants at least 24 hours for the subject to appeal, even after a delayed score. Appeals are allowed through the stored deadline; finalization is permissionless strictly afterward. An appealed epoch is re-evaluated with its appeal evidence. Distinct source hosts alone do not prove independent ownership.
 
-The shipped UI is a static ES-module application in docs/; no build step is required. Serve that directory over HTTP. Its pinned SDK is loaded from esm.sh. Run python -m pytest score_tests -q and genvm-lint scoring_engine/merit_circuit.py (set PYTHONIOENCODING=utf-8 on Windows).
+## Verification and use
 
-## Evidence and limits
+Enter MC-OWNER-1788810754 and select LOAD EPOCH to read the new test.
 
-Six direct VM tests pass, including delayed scoring, boundary behavior and unauthorized actions. Real delayed scoring, early-finalization rejection, unauthorized-appeal rejection and subject appeal are recorded in evidence/remediation-network.json. These scripted tests do not prove a complete browser wallet workflow. See evidence/remediation-review.md for remaining gates. No acceptance guarantee is made.
+Run python -m pytest score_tests -q for local tests, genvm-lint scoring_engine/merit_circuit.py for lint, and python epoch_ops/owner_smoke.py for the owner-only check. The Merit check performs owner-only writes and resumes finalization only after the stored deadline.
+
+The website is a static ES-module application served from docs/ with its SDK pinned to genlayer-js 1.1.8. Wallet writes need a supported StudioNet browser wallet. Reading the public app does not require one. See evidence/remediation-review.md for remaining verification.

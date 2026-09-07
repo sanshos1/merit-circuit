@@ -1,0 +1,60 @@
+{
+  "contract": "0x79aAC36e444cDa73b845AE5129574Ea32e0ce7b5",
+  "wallet": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
+  "network": "StudioNet",
+  "transactions": {
+    "open": {
+      "hash": "0xee6c82c0c0fbf2ee79fa048c6d7dd7d63b2bf4744a52f1cf15b91b19522f98cd",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    },
+    "score": {
+      "hash": "0x01d8ffaf34f2675aa0745bb38c34c9e86510cd1533b9bf7468cd3c5a3d526f17",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    },
+    "appeal": {
+      "hash": "0x3a7bb47dee14b8edd1138f406f39807303883e991e2521a1f962e644e8feaccd",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    }
+  },
+  "sourceMatches": true,
+  "sourceSha256": "3a0a2e65273630c9be0e0975caba68f6dbc123e8629dbf9ba66fb459fec6e2ea",
+  "deploymentStatus": "FINALIZED",
+  "deploymentTx": "0xc6a95c61f0ddd161a3ae3d55e2e97f4baffd672ee8f9e6d80d79eeb3ae1d2eb6",
+  "id": "MC-OWNER-1788810754",
+  "requestedDeadline": 1788810814,
+  "state": {
+    "appeal": "https://github.com/sanshos1/merit-circuit/raw/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/appeal.txt",
+    "appealDeadline": 1788897162,
+    "components": [
+      {
+        "code": "ADOPTION",
+        "points": 35
+      },
+      {
+        "code": "QUALITY",
+        "points": 50
+      }
+    ],
+    "digests": [
+      "c6260f920de686f967e39ec526e4cb5e22d81f34b1daadd4877f7f8e4f75191b",
+      "6e2bb10aba1fd3759209b8c3d8d7c4c6473128a34bee1a4f758534a28beea0e7"
+    ],
+    "id": "MC-OWNER-1788810754",
+    "maintainer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
+    "scope": "Owner-only SDK contribution test",
+    "score": 85,
+    "sources": [
+      "https://raw.githubusercontent.com/sanshos1/merit-circuit/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/contribution.txt",
+      "https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@c97f9a6d5278d265e71c56db227527826a82f8de/evidence/attestation.txt"
+    ],
+    "state": "APPEALED",
+    "subject": "0xad049e0edc298c97552ed60071a35bfc60181fd4"
+  },
+  "pendingFinalization": true
+}

@@ -1,10 +1,11 @@
 {
-  "contract": "0x785754092A73fD9d0274b0a751449EdE47b4bf0a",
-  "deploymentTx": "0x58d30543a4de7ea69d0350899806ee4886417360877f744ea56d4443fd95ba38",
+  "contract": "0x79aAC36e444cDa73b845AE5129574Ea32e0ce7b5",
+  "deploymentTx": "0xc6a95c61f0ddd161a3ae3d55e2e97f4baffd672ee8f9e6d80d79eeb3ae1d2eb6",
   "network": "StudioNet",
   "deployer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
-  "sourceCommit": "c97f9a6d5278d265e71c56db227527826a82f8de",
-  "evidenceCommit": "c97f9a6d5278d265e71c56db227527826a82f8de",
+  "sourceCommit": "0c86cb0efeb52b46946b5db50ca5f7894f3cb8bd",
+  "sourceSha256": "3a0a2e65273630c9be0e0975caba68f6dbc123e8629dbf9ba66fb459fec6e2ea",
   "receiptStatus": "ACCEPTED",
-  "execution": "CONTRACT_ADDRESS_RETURNED"
+  "execution": "SUCCESS",
+  "walletPolicy": "ACCOUNT_3 only"
 }
