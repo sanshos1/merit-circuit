@@ -1,7 +1,6 @@
 import { createAccount, createClient } from 'https://esm.sh/genlayer-js@1.1.8';
 import { studionet } from 'https://esm.sh/genlayer-js@1.1.8/chains';
 const ADDRESS='0x6ce153FD0882Dc74b6425f11A808ba2b100Ba74b', ENDPOINT='https://studio.genlayer.com/api';
-const SOURCES=['https://raw.githubusercontent.com/sanshos1/merit-circuit/93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/contribution.txt','https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@93e67d3e45791811b62cd1c3ef6dd8db3b18b017/evidence/attestation.txt'];
 let wallet,account;
 const reader=createClient({chain:studionet,endpoint:ENDPOINT,account:createAccount()});
 const root=document.createElement('main'); root.className='review-sheet';
@@ -25,7 +24,7 @@ input{width:100%;border:1px solid #141414;background:#fffef8;padding:13px;font:i
 <header class="mast"><div class="serial">MERIT OFFICE<br>FORM 08</div><div><h1>Contribution<br>review sheet</h1></div><div class="badge">EPOCH OPEN</div></header>
 <div class="workspace"><section class="worksheet">
 <div class="step"><div class="step-no">01</div><div class="fields"><label>Epoch reference<input id="id" placeholder="Enter a unique epoch reference"></label><label>Subject address<input id="subject" placeholder="0x..."></label><label class="wide">Contribution under review<input id="scope" placeholder="Describe the contribution under review"></label></div></div>
-<div class="step"><div class="step-no">02</div><div><div class="formula"><div class="factor">QUALITY EVIDENCE<b>60</b></div><div class="factor">ADOPTION EVIDENCE<b>40</b></div></div><p>Two independent records are fixed to this epoch before scoring.</p></div></div>
+<div class="step"><div class="step-no">02</div><div><div class="formula"><div class="factor">QUALITY EVIDENCE<b>60</b></div><div class="factor">ADOPTION EVIDENCE<b>40</b></div></div><div class="fields"><label>Quality source URL<input id="source1" placeholder="https://..."></label><label>Adoption source URL<input id="source2" placeholder="https://..."></label><label class="wide">Appeal deadline<input id="deadline" type="datetime-local"></label></div><p>Both independent records and the appeal deadline are fixed to this epoch before scoring.</p></div></div>
 <div class="step"><div class="step-no">03</div><div class="fields"><label class="wide">Appeal record, only when disputed<input id="appeal" placeholder="https://independent-record.example/review"></label></div></div>
 <div class="actions"><button id="open">01 - REGISTER EPOCH</button><button id="scoreBtn">02 - ISSUE SCORE</button><button id="appealBtn">03 - FILE APPEAL</button><button id="finalize">04 - SEAL LEDGER</button></div>
 </section><aside class="sidebar"><div class="scorecard"><small>CANONICAL SCORE</small><div class="score-number" id="score">--</div><div>points / 100</div></div>
@@ -37,7 +36,7 @@ const show=x=>{q('#state').textContent=typeof x==='string'?x:JSON.stringify(x,(_
 async function connect(){const provider=window.ethereum;if(!provider)throw Error('Install MetaMask or Rabby.');[account]=await provider.request({method:'eth_requestAccounts'});if(String(await provider.request({method:'eth_chainId'})).toLowerCase()!=='0xf22f')await provider.request({method:'wallet_switchEthereumChain',params:[{chainId:'0xf22f'}]});wallet=createClient({chain:studionet,endpoint:ENDPOINT,account,provider});if(!value('subject'))q('#subject').value=account;show('Subject wallet connected to StudioNet.')}
 async function load(){const result=await reader.readContract({address:ADDRESS,functionName:'get_epoch',args:[value('id')]});show(result);return result}
 async function act(functionName,args){try{if(!wallet)await connect();show('Approval requested for '+functionName+'.');const hash=await wallet.writeContract({address:ADDRESS,functionName,args,value:0n});show('Submitted '+hash+'. Waiting for validator acceptance...');await wallet.waitForTransactionReceipt({hash,status:'ACCEPTED',retries:120,interval:5000});show('Accepted. Loading the canonical review ledger...');await load()}catch(error){show(error.message||String(error))}}
-q('#open').onclick=()=>act('open_epoch',[value('id'),value('subject'),value('scope'),SOURCES]);
+q('#open').onclick=()=>act('open_epoch',[value('id'),value('subject'),value('scope'),[value('source1'),value('source2')],Math.floor(new Date(value('deadline')).getTime()/1000)]);
 q('#scoreBtn').onclick=async()=>{await act('score',[value('id')]);const state=await load();q('#score').textContent=state.score??'--'};
 q('#appealBtn').onclick=()=>act('appeal',[value('id'),value('appeal')]);
 q('#finalize').onclick=()=>act('finalize',[value('id')]);
