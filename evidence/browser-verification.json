@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-09-07T19:58:00Z",
+  "url": "https://sanshos1.github.io/merit-circuit/",
+  "frontendRevision": "57f9548cbb88aff05b13b6ad602e25a480e33ba5",
+  "action": "Entered MC-1788806858 and selected LOAD EPOCH",
+  "observed": {
+    "state": "APPEALED",
+    "score": 85,
+    "sourceSlots": 2,
+    "appealDeadline": 1788893290
+  },
+  "writeCheck": "Unavailable because the controlled browser has no MetaMask or Rabby provider; the UI displayed that exact requirement."
+}

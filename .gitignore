@@ -2,3 +2,5 @@ __pycache__/
 .pytest_cache/
 artifacts/
 *.pyc
+# Full validator receipts stay local; compact verified hashes are committed.
+evidence/rejection-*.json
