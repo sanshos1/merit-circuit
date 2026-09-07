@@ -25,11 +25,17 @@ def send(client,label,name,args):
  if not success:raise RuntimeError({'tx':h,'status':info.get('status_name'),'result':info.get('tx_execution_result_name')})
  out['transactions'][label]=h;save();return h
 def reject(client,label,name,args,message):
- try:client.simulate_write_contract(address=address,function_name=name,args=args)
- except Exception as exc:
-  if message not in str(exc):raise
-  out['checks'][label]={'expectedRejection':message};save()
- else:raise AssertionError('Unexpected success: '+label)
+ if label in out['checks'] and out['checks'][label].get('verified'):return
+ h=out['checks'].get(label,{}).get('tx')
+ if not h:
+  h=client.write_contract(address=address,function_name=name,args=args);out['checks'][label]={'tx':h};save();print(label,h,flush=True)
+ client.wait_for_transaction_receipt(transaction_hash=h,status=TransactionStatus.ACCEPTED,retries=120,interval=5000)
+ info=client.get_transaction(transaction_hash=h)
+ (ROOT/('evidence/rejection-'+label+'.json')).write_text(json.dumps(info,indent=2,default=str))
+ if any(r.get('execution_result')=='SUCCESS' for r in info.get('consensus_data',{}).get('leader_receipt',[])):raise AssertionError('Unexpected success: '+label)
+ raw=json.dumps(info,default=str)
+ if message not in raw:raise RuntimeError('Inspect recorded rejection receipt: '+label)
+ out['checks'][label]={'tx':h,'expectedRejection':message,'verified':True};save()
 
 eid=out.setdefault('id','MC-'+str(int(time.time())));save()
 sources=[f'https://raw.githubusercontent.com/sanshos1/merit-circuit/{commit}/evidence/contribution.txt',f'https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@{commit}/evidence/attestation.txt']
@@ -51,4 +57,3 @@ if int(time.time())>state['appealDeadline'] and state['state']!='FINAL':
  state=clients[3].read_contract(address=address,function_name='get_epoch',args=[eid])
 out['state']=state;out['pendingFinalization']=state['state']!='FINAL';save()
 print(json.dumps(out,indent=2))
-

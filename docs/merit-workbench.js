@@ -1,6 +1,6 @@
 import { createAccount, createClient } from 'https://esm.sh/genlayer-js@1.1.8';
 import { studionet } from 'https://esm.sh/genlayer-js@1.1.8/chains';
-const ADDRESS='0xf1C61C7ef26904e2C390Af3F0eCDcDa0046a5f8d', ENDPOINT='https://studio.genlayer.com/api';
+const ADDRESS='0x785754092A73fD9d0274b0a751449EdE47b4bf0a', ENDPOINT='https://studio.genlayer.com/api';
 let wallet,account;
 const reader=createClient({chain:studionet,endpoint:ENDPOINT,account:createAccount()});
 const root=document.createElement('main'); root.className='review-sheet';
@@ -24,19 +24,20 @@ input{width:100%;border:1px solid #141414;background:#fffef8;padding:13px;font:i
 <header class="mast"><div class="serial">MERIT OFFICE<br>FORM 08</div><div><h1>Contribution<br>review sheet</h1></div><div class="badge">EPOCH OPEN</div></header>
 <div class="workspace"><section class="worksheet">
 <div class="step"><div class="step-no">01</div><div class="fields"><label>Epoch reference<input id="id" placeholder="Enter a unique epoch reference"></label><label>Subject address<input id="subject" placeholder="0x..."></label><label class="wide">Contribution under review<input id="scope" placeholder="Describe the contribution under review"></label></div></div>
-<div class="step"><div class="step-no">02</div><div><div class="formula"><div class="factor">QUALITY EVIDENCE<b>60</b></div><div class="factor">ADOPTION EVIDENCE<b>40</b></div></div><div class="fields"><label>Quality source URL<input id="source1" placeholder="https://..."></label><label>Adoption source URL<input id="source2" placeholder="https://..."></label><label class="wide">Appeal deadline<input id="deadline" type="datetime-local"></label></div><p>Both independent records and the appeal deadline are fixed to this epoch before scoring.</p></div></div>
+<div class="step"><div class="step-no">02</div><div><div class="formula"><div class="factor">QUALITY EVIDENCE<b>60</b></div><div class="factor">ADOPTION EVIDENCE<b>40</b></div></div><div class="fields"><label>Quality source URL<input id="source1" placeholder="https://..."></label><label>Adoption source URL<input id="source2" placeholder="https://..."></label><label class="wide">Requested earliest finalization<input id="deadline" type="datetime-local"></label></div><p>Choose two source URLs. Scoring always grants at least 24 hours to appeal, even after the requested date.</p></div></div>
 <div class="step"><div class="step-no">03</div><div class="fields"><label class="wide">Appeal record, only when disputed<input id="appeal" placeholder="https://independent-record.example/review"></label></div></div>
 <div class="actions"><button id="open">01 - REGISTER EPOCH</button><button id="scoreBtn">02 - ISSUE SCORE</button><button id="appealBtn">03 - FILE APPEAL</button><button id="finalize">04 - SEAL LEDGER</button></div>
 </section><aside class="sidebar"><div class="scorecard"><small>CANONICAL SCORE</small><div class="score-number" id="score">--</div><div>points / 100</div></div>
-<div class="ledger"><b>REVIEW LEDGER</b><div class="ledger-row"><span>Source independence</span><span>2 / 2</span></div><div class="ledger-row"><span>Weight equation</span><span>100</span></div><div class="ledger-row"><span>Appeal window</span><span>OPEN</span></div></div>
+<div class="ledger"><b>REVIEW LEDGER</b><div class="ledger-row"><span>Source independence</span><span>2 / 2</span></div><div class="ledger-row"><span>Weight equation</span><span>100</span></div><div class="ledger-row"><span>Appeal window</span><span id="appeal-status">Not scored</span></div></div>
 <output class="status" id="state">Review sheet ready.</output></aside></div>`;
 document.body.replaceChildren(root);
 const q=s=>root.querySelector(s), value=id=>q('#'+id).value.trim();
 const show=x=>{q('#state').textContent=typeof x==='string'?x:JSON.stringify(x,(_,item)=>typeof item==='bigint'?item.toString():item,2)};
 async function connect(){const provider=window.ethereum;if(!provider)throw Error('Install MetaMask or Rabby.');[account]=await provider.request({method:'eth_requestAccounts'});if(String(await provider.request({method:'eth_chainId'})).toLowerCase()!=='0xf22f')await provider.request({method:'wallet_switchEthereumChain',params:[{chainId:'0xf22f'}]});wallet=createClient({chain:studionet,endpoint:ENDPOINT,account,provider});if(!value('subject'))q('#subject').value=account;show('Subject wallet connected to StudioNet.')}
-async function load(){const result=await reader.readContract({address:ADDRESS,functionName:'get_epoch',args:[value('id')]});show(result);return result}
-async function act(functionName,args){try{if(!wallet)await connect();show('Approval requested for '+functionName+'.');const hash=await wallet.writeContract({address:ADDRESS,functionName,args,value:0n});show('Submitted '+hash+'. Waiting for validator acceptance...');await wallet.waitForTransactionReceipt({hash,status:'ACCEPTED',retries:120,interval:5000});show('Accepted. Loading the canonical review ledger...');await load()}catch(error){show(error.message||String(error))}}
+async function load(){const result=await reader.readContract({address:ADDRESS,functionName:'get_epoch',args:[value('id')]});show(result);q('#score').textContent=result.state==='OPEN'?'--':result.score;q('#appeal-status').textContent=result.state==='OPEN'?'Not started':new Date(Number(result.appealDeadline)*1000).toLocaleString();q('.badge').textContent=result.state;return result}
+async function act(functionName,args){try{await connect();show('Approval requested for '+functionName+'.');const hash=await wallet.writeContract({address:ADDRESS,functionName,args,value:0n});show('Submitted '+hash+'. Waiting for transaction finalization...');await wallet.waitForTransactionReceipt({hash,status:'FINALIZED',retries:120,interval:5000});show('Finalized. Loading the canonical review ledger...');await load()}catch(error){show(error.message||String(error))}}
+const readButton=document.createElement('button');readButton.textContent='LOAD EPOCH';readButton.onclick=()=>load().catch(error=>show(error.message||String(error)));q('.actions').append(readButton);
 q('#open').onclick=()=>act('open_epoch',[value('id'),value('subject'),value('scope'),[value('source1'),value('source2')],Math.floor(new Date(value('deadline')).getTime()/1000)]);
-q('#scoreBtn').onclick=async()=>{await act('score',[value('id')]);const state=await load();q('#score').textContent=state.score??'--'};
+q('#scoreBtn').onclick=()=>act('score',[value('id')]);
 q('#appealBtn').onclick=()=>act('appeal',[value('id'),value('appeal')]);
 q('#finalize').onclick=()=>act('finalize',[value('id')]);
