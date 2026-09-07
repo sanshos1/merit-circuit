@@ -17,3 +17,20 @@ def test_rubric_caps_reject_bad_result(direct_vm,direct_deploy):
  with direct_vm.expect_revert('invalid rubric'):c.score('R')
 def test_forged_component_rejected(direct_vm,direct_deploy):
  c=direct_deploy(CONTRACT);mocks(direct_vm);c.open_epoch('X',c.admin.as_hex,'work',U,now()+100);x=c._score(c.epochs['X']);assert direct_vm.run_validator(leader_result=x);x=dict(x);x['components'][0]['points']=34;assert not direct_vm.run_validator(leader_result=x)
+
+def test_delayed_score_starts_full_window(direct_vm,direct_deploy):
+ direct_vm.warp('2030-01-01T00:00:00Z');c=direct_deploy(CONTRACT);mocks(direct_vm)
+ c.open_epoch('LATE',c.admin.as_hex,'work',U,1893456060)
+ direct_vm.warp('2030-01-03T00:00:00Z');c.score('LATE')
+ assert c.get_epoch('LATE')['appealDeadline']==1893715200
+ with direct_vm.expect_revert('still open'):c.finalize('LATE')
+ direct_vm.warp('2030-01-04T00:00:00Z')
+ with direct_vm.expect_revert('still open'):c.finalize('LATE')
+ c.appeal('LATE','https://appeal.example/additional')
+ direct_vm.warp('2030-01-04T00:00:01Z');c.finalize('LATE');assert c.get_epoch('LATE')['state']=='FINAL'
+
+def test_permissionless_expiry_and_unauthorized_appeal(direct_vm,direct_deploy):
+ direct_vm.warp('2030-01-01T00:00:00Z');c=direct_deploy(CONTRACT);mocks(direct_vm);c.open_epoch('OTHER',c.admin.as_hex,'work',U,1893456060);c.score('OTHER')
+ direct_vm.sender=bytes.fromhex('11'*20)
+ with direct_vm.expect_revert('subject appeal'):c.appeal('OTHER','https://appeal.example/additional')
+ direct_vm.warp('2030-01-02T00:00:01Z');c.finalize('OTHER');assert c.get_epoch('OTHER')['state']=='FINAL'

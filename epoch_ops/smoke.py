@@ -12,9 +12,16 @@ def send(client,name,args):
  if info.get('status_name')!='ACCEPTED':raise RuntimeError(info)
  return h
 deadline=int(time.time())+90;tx={'open':send(clients[0],'open_epoch',[eid,accounts[1].address,'GenLayer SDK contribution',sources,deadline]),'score':send(clients[0],'score',[eid])}
-try:clients[0].simulate_write_contract(address=address,function_name='finalize',args=[eid]);raise RuntimeError('early finalize unexpectedly succeeded')
-except Exception:pass
+try:clients[0].simulate_write_contract(address=address,function_name='finalize',args=[eid])
+except Exception as exc:
+ if 'appeal window still open' not in str(exc):raise
+else:raise RuntimeError('early finalize unexpectedly succeeded')
 tx['appeal']=send(clients[1],'appeal',[eid,f'https://github.com/sanshos1/merit-circuit/raw/{commit}/evidence/appeal.txt'])
-time.sleep(max(0,deadline-int(time.time())+2));tx['finalize']=send(clients[0],'finalize',[eid]);state=clients[0].read_contract(address=address,function_name='get_epoch',args=[eid])
+state=clients[0].read_contract(address=address,function_name='get_epoch',args=[eid])
+deadline=int(state['appealDeadline'])
+if int(time.time())<=deadline:
+ (ROOT/'evidence/pending-appeal.json').write_text(json.dumps({'id':eid,'contract':address,'transactions':tx,'state':state},indent=2))
+ raise RuntimeError('Protected appeal window is active. Resume finalization after stored appealDeadline; do not claim FINAL.')
+tx['finalize']=send(clients[0],'finalize',[eid]);state=clients[0].read_contract(address=address,function_name='get_epoch',args=[eid])
 if state['state']!='FINAL' or state['components']!=[{'code':'ADOPTION','points':35},{'code':'QUALITY','points':50}]:raise RuntimeError(state)
 (ROOT/'evidence/network-run.json').write_text(json.dumps({'id':eid,'contract':address,'sourceCommit':commit,'earlyFinalizeRejected':True,'transactions':tx,'state':state},indent=2));print(json.dumps(state,indent=2))
