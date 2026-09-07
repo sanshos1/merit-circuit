@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-09-07T19:20:00Z",
+  "commit": "a10dd643b877188ef5ab74c80f6424adf251e039",
+  "checkout": "fresh local clone with no working-tree changes",
+  "commands": {
+    "python -m pytest score_tests -q": "PASS: 6 tests",
+    "genvm-lint scoring_engine/merit_circuit.py": "PASS: 3 checks",
+    "node --check docs/merit-workbench.js": "PASS"
+  },
+  "note": "Unused-mock warnings correspond to paths that intentionally stop before appeal or validator execution; they are not counted as coverage."
+}
