@@ -1,8 +1,14 @@
-# Remediation review
+# Remediation review — 2026-09-07
 
-| Mandatory requirement | Implementation | Verification | Status |
-|---|---|---|---|
-| Delayed scoring must preserve a full appeal opportunity | score extends the deadline to at least 24 hours after scoring | 6 direct tests pass, including two-day scoring delay, exact deadline appeal, early rejection and permissionless finalization; GenVM lint passes | PASS (local) |
-| Shipped application and submitted contract match | fresh deployment and public browser workflow | deployed-source comparison and browser proof | UNVERIFIED |
+| Requirement | Evidence | Status |
+|---|---|---|
+| Delayed scoring preserves a usable appeal period | Six direct VM tests; real delayed score, rejected early finalize and accepted subject appeal in remediation-network.json | PASS |
+| Permissionless post-deadline finalization | Direct VM boundary/other-caller tests pass; real record MC-1788806858 remains APPEALED until 2026-09-08 18:48:10 UTC | UNVERIFIED (live completion pending) |
+| Reviewed source equals deployed source | Actual deployment RPC contract_code decoded and compared; deployment-verification.json records hash and finalized successful transactions | PASS |
+| Public frontend reads corrected deployment | https://sanshos1.github.io/merit-circuit/ loaded MC-1788806858 via LOAD EPOCH: APPEALED, score 85, deadline 1788893290; build 57f9548 | PASS (browser read) |
+| Complete fresh browser wallet workflow | Available in-app browser has no wallet; Issue Score reports Install MetaMask or Rabby | UNVERIFIED |
+| Exact submitted website and Explorer fields match | Submission form unavailable for inspection | UNVERIFIED |
 
-Earlier network-run evidence predates this remediation and does not prove these requirements.
+Lint: passed (3 checks). Direct tests: 6 passed; unused mock warnings are not additional coverage. JavaScript syntax: passed. Source comparison normalizes local CRLF to LF as deployment does; no semantic rewriting.
+
+Earlier network-run.json is historical. Different evidence hosts do not establish independent ownership. No resubmission readiness or acceptance claim is made while mandatory gates remain unverified.
