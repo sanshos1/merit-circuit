@@ -1,0 +1,54 @@
+{
+  "contract": "0x785754092A73fD9d0274b0a751449EdE47b4bf0a",
+  "sourceCommit": "c97f9a6d5278d265e71c56db227527826a82f8de",
+  "network": "StudioNet",
+  "transactions": {
+    "open": "0xbbe1e4ca2eaa065648afb7352bb7a23ef5ac16d6cf3be4efdf6545849cb5a781",
+    "score": "0x7ab55cf0bc80dfffa1dc97dbebf3e70888ac4a555f7efa8461502f01f9e948e6",
+    "appeal": "0xa1c9aac50d23ef48db7f194e29a1f3c6e2913be238a2d8542f9fad00d536f766"
+  },
+  "checks": {
+    "earlyFinalize": {
+      "tx": "0x47e60105a88e68c406703d3d9e1130a873b3a0500476739b3289f181f010d593",
+      "expectedRejection": "appeal window still open",
+      "verified": true
+    },
+    "wrongSubject": {
+      "tx": "0x3abd1fe15b5a6c157070690d4b403ef36553a6577cc8a2ffbd2ad4e64dcd00c7",
+      "expectedRejection": "subject appeal window required",
+      "verified": true
+    }
+  },
+  "demo": "All role wallets are operator-controlled test accounts, not independent organizations.",
+  "id": "MC-1788806858",
+  "creationDeadline": 1788806888,
+  "state": {
+    "appeal": "https://github.com/sanshos1/merit-circuit/raw/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/appeal.txt",
+    "appealDeadline": 1788893290,
+    "components": [
+      {
+        "code": "ADOPTION",
+        "points": 35
+      },
+      {
+        "code": "QUALITY",
+        "points": 50
+      }
+    ],
+    "digests": [
+      "c6260f920de686f967e39ec526e4cb5e22d81f34b1daadd4877f7f8e4f75191b",
+      "6e2bb10aba1fd3759209b8c3d8d7c4c6473128a34bee1a4f758534a28beea0e7"
+    ],
+    "id": "MC-1788806858",
+    "maintainer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
+    "scope": "GenLayer SDK contribution",
+    "score": 85,
+    "sources": [
+      "https://raw.githubusercontent.com/sanshos1/merit-circuit/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/contribution.txt",
+      "https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@c97f9a6d5278d265e71c56db227527826a82f8de/evidence/attestation.txt"
+    ],
+    "state": "APPEALED",
+    "subject": "0x05c0cc3f433f6e296f18117f558fdb9043434793"
+  },
+  "pendingFinalization": true
+}

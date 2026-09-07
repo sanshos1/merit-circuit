@@ -1,0 +1,26 @@
+{
+  "project": "merit-circuit",
+  "contract": "0x785754092A73fD9d0274b0a751449EdE47b4bf0a",
+  "sourceCommit": "c97f9a6d5278d265e71c56db227527826a82f8de",
+  "deploymentTx": "0x58d30543a4de7ea69d0350899806ee4886417360877f744ea56d4443fd95ba38",
+  "sourceSha256": "3a0a2e65273630c9be0e0975caba68f6dbc123e8629dbf9ba66fb459fec6e2ea",
+  "sourceMatches": true,
+  "normalization": "Local text read with universal newline normalization, as in deploy.py; UTF-8 encoded. RPC contract_code decoded from base64.",
+  "transactions": {
+    "open": {
+      "hash": "0xbbe1e4ca2eaa065648afb7352bb7a23ef5ac16d6cf3be4efdf6545849cb5a781",
+      "status": "FINALIZED",
+      "executionSuccess": true
+    },
+    "score": {
+      "hash": "0x7ab55cf0bc80dfffa1dc97dbebf3e70888ac4a555f7efa8461502f01f9e948e6",
+      "status": "FINALIZED",
+      "executionSuccess": true
+    },
+    "appeal": {
+      "hash": "0xa1c9aac50d23ef48db7f194e29a1f3c6e2913be238a2d8542f9fad00d536f766",
+      "status": "FINALIZED",
+      "executionSuccess": true
+    }
+  }
+}

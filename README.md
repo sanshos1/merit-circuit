@@ -1,11 +1,26 @@
 # Merit Circuit
 
-## Current remediation status
+Evidence-weighted contribution epochs with an enforceable subject appeal window.
 
-Local correction: scoring grants at least 86,400 seconds from the scoring timestamp, even when the creation-time deadline has expired. A later requested deadline is preserved. Appeals are allowed through the deadline and permissionless finalization starts strictly afterward. Regression tests cover delayed scoring, the exact boundary, subject-only appeal and finalization by another caller. Earlier deployment/lifecycle records below are historical and do not verify this correction. See `evidence/remediation-review.md` before resubmission.
+## Current reviewed deployment
 
-Merit Circuit creates evidence-weighted reputation epochs instead of permanent opaque scores. Every epoch stores two operator-configured, distinct-host base evidence URLs. Validators apply one immutable rubric: QUALITY is capped at 60 and ADOPTION at 40, and they verify both exact component values and the total.
+- StudioNet: [contract](https://explorer-studio.genlayer.com/address/0x785754092A73fD9d0274b0a751449EdE47b4bf0a).
+- Contract source commit: c97f9a6d5278d265e71c56db227527826a82f8de.
+- [Public workbench](https://sanshos1.github.io/merit-circuit/).
+- Actual deployment transaction code matches the reviewed source; see evidence/deployment-verification.json. Earlier network-run.json is historical.
 
-Scoring opens an enforceable appeal window. The subject alone may file evidence from a third host before the stored deadline, and nobody can finalize before that deadline. Afterward finalization is permissionless, preventing abandonment. Duplicate IDs, source reuse, malformed URLs, rubric drift, early finalization, unauthorized appeals and forged components are tested. Run `python -m pytest score_tests -q`.
+## Rules and consensus
 
-Verified StudioNet deployment: `0xf1C61C7ef26904e2C390Af3F0eCDcDa0046a5f8d`, source commit `c77f201118a2f818b29443186d5e45d3eb8b01f7`. The recorded live lifecycle proves early finalization rejection, subject appeal acceptance, post-deadline finalization and exact 60/40 rubric output.
+An epoch fixes its subject, scope and two configurable HTTPS source URLs on distinct hosts. Distinct hosts do not prove independent ownership. Validators recheck the evidence and exact QUALITY (0–60), ADOPTION (0–40), and total scores. The subject can submit appeal evidence from a third host. Scoring always extends the appeal deadline to at least 86,400 seconds after scoring; a later requested deadline is preserved. Appeals are allowed at the deadline; permissionless finalization is allowed only strictly afterward.
+
+## Reproduce
+
+Open the workbench and enter MC-1788806858, then LOAD EPOCH for the actual remediation record. It is APPEALED; the protected deadline is 2026-09-08 18:48:10 UTC. Post-deadline live finalization is pending, not passed.
+
+For a fresh workflow, connect a StudioNet wallet through MetaMask or Rabby. Enter a unique epoch ID, subject address, scope, two actual source URLs and a future requested date. Register, score, load the returned deadline, switch to the subject wallet to appeal, and finalize only after that stored deadline. Keep the same epoch ID when switching roles. Wallet transactions require network fees and the required role.
+
+The shipped UI is a static ES-module application in docs/; no build step is required. Serve that directory over HTTP. Its pinned SDK is loaded from esm.sh. Run python -m pytest score_tests -q and genvm-lint scoring_engine/merit_circuit.py (set PYTHONIOENCODING=utf-8 on Windows).
+
+## Evidence and limits
+
+Six direct VM tests pass, including delayed scoring, boundary behavior and unauthorized actions. Real delayed scoring, early-finalization rejection, unauthorized-appeal rejection and subject appeal are recorded in evidence/remediation-network.json. These scripted tests do not prove a complete browser wallet workflow. See evidence/remediation-review.md for remaining gates. No acceptance guarantee is made.
