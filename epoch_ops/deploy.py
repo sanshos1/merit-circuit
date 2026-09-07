@@ -1,37 +1,33 @@
-import json,re,subprocess
+"""Deploy the reviewed source with the project owner's wallet only."""
+import json, hashlib, subprocess
 from pathlib import Path
-from genlayer_py import create_client,create_account
+from genlayer_py import create_client
 from genlayer_py.chains import studionet
 from genlayer_py.types import TransactionStatus
-ROOT=Path(__file__).parents[1]
-ENV=(ROOT.parents[3]/'accounts.env').read_text()
-def secret():return re.search(r'^ACCOUNT_3_GENLAYER_PRIVATE_KEY\s*=\s*"?([^"\r\n]+)',ENV,re.M).group(1).strip()
-def address(value):
- if isinstance(value,dict):
-  for k in ('contract_address','contractAddress'):
-   if value.get(k):return value[k]
-  if value.get('recipient') and str(value.get('tx_execution_result','')) in ('1','6'):return value['recipient']
-  for nested in value.values():
-   found=address(nested)
-   if found:return found
- if isinstance(value,list):
-  for nested in value:
-   found=address(nested)
-   if found:return found
+from owner_wallet import owner_account
+ROOT = Path(__file__).resolve().parents[1]
 def main():
- account=create_account(account_private_key=secret())
- client=create_client(chain=studionet,account=account)
- code=(ROOT/"scoring_engine/merit_circuit.py").read_text()
- tx=client.deploy_contract(code=code,args=[])
- print('deploy',tx,flush=True)
- receipt=client.wait_for_transaction_receipt(transaction_hash=tx,status=TransactionStatus.ACCEPTED,retries=120,interval=10000)
- info=client.get_transaction(transaction_hash=tx)
- contract=address(receipt)
- if not contract or info.get('status_name')!='ACCEPTED' or not any(r.get('execution_result')=='SUCCESS' for r in info.get('consensus_data',{}).get('leader_receipt',[])):
-  raise RuntimeError({'address':contract,'status':info.get('status_name'),'execution':info.get('tx_execution_result_name')})
- commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
- out={'contract':contract,'deploymentTx':tx,'network':'StudioNet','deployer':account.address,'sourceCommit':commit,'evidenceCommit':commit,'receiptStatus':info.get('status_name'),'execution':info.get('tx_execution_result_name') or 'CONTRACT_ADDRESS_RETURNED'}
- (ROOT/"evidence/deployment.json").parent.mkdir(parents=True,exist_ok=True)
- (ROOT/"evidence/deployment.json").write_text(json.dumps(out,indent=2))
- print(json.dumps(out,indent=2))
-if __name__=='__main__':main()
+    account = owner_account()
+    client = create_client(chain=studionet, account=account)
+    source = 'scoring_engine/merit_circuit.py'
+    code = (ROOT / source).read_text(encoding='utf-8')
+    commit = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    pending = ROOT / 'evidence/owner-deployment-pending.json'
+    if pending.exists():
+        job = json.loads(pending.read_text())
+        if job['sourceSha256'] != hashlib.sha256(code.encode()).hexdigest():
+            raise RuntimeError('Pending deployment source mismatch')
+        tx = job['deploymentTx']
+    else:
+        tx = client.deploy_contract(code=code,args=[])
+        pending.write_text(json.dumps({'deploymentTx':tx,'sourceSha256':hashlib.sha256(code.encode()).hexdigest(),'sourceCommit':commit},indent=2))
+    print('Owner deployment transaction:',tx,flush=True)
+    client.wait_for_transaction_receipt(transaction_hash=tx,status=TransactionStatus.ACCEPTED,retries=120,interval=5000)
+    info = client.get_transaction(transaction_hash=tx)
+    if not any(r.get('execution_result')=='SUCCESS' for r in info.get('consensus_data',{}).get('leader_receipt',[])):
+        raise RuntimeError('Deployment execution did not succeed')
+    contract = info['data']['contract_address']
+    result = {'contract':contract,'deploymentTx':tx,'network':'StudioNet','deployer':account.address,'sourceCommit':json.loads(pending.read_text())['sourceCommit'],'sourceSha256':hashlib.sha256(code.encode()).hexdigest(),'receiptStatus':info['status_name'],'execution':'SUCCESS','walletPolicy':'ACCOUNT_3 only'}
+    (ROOT/'evidence/deployment.json').write_text(json.dumps(result,indent=2)+'\n')
+    print(json.dumps(result,indent=2),flush=True)
+if __name__=='__main__': main()
