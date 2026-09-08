@@ -8,7 +8,7 @@
 | Old mixed-account smoke scripts disabled | PASS | smoke.py and remediation_smoke.py exit before loading credentials |
 | Local role and reviewer regression tests | PASS (previous contract tests; contract source unchanged) | 6 direct VM tests using synthetic addresses |
 | New live lifecycle | PARTIAL: APPEALED, deadline pending | owner-network.json |
-| Public frontend reads replacement | UNVERIFIED | Address changed; awaiting published browser check |
+| Public frontend reads replacement | PASS (read only) | Published website returned MC-OWNER-1788810754, APPEALED, score 85, deadline 1788897162 |
 | Fresh browser wallet lifecycle | UNVERIFIED | No wallet provider in controlled browser |
 
 The old deployment proofs do not apply to this replacement. Do not submit old Explorer links or claim its records exist at the new address.

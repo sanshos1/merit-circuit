@@ -29,8 +29,9 @@ def send(label,method,args):
         entry={'hash':client.write_contract(address=d['contract'],function_name=method,args=args)}
         out['transactions'][label]=entry;save()
     print(label,entry['hash'],flush=True)
-    client.wait_for_transaction_receipt(transaction_hash=entry['hash'],status=TransactionStatus.ACCEPTED,retries=120,interval=5000)
+    client.wait_for_transaction_receipt(transaction_hash=entry['hash'],status=TransactionStatus.FINALIZED,retries=120,interval=5000)
     info=client.get_transaction(transaction_hash=entry['hash'])
+    if info['status_name']!='FINALIZED': raise RuntimeError('Transaction has not finalized: '+label)
     if not any(r.get('execution_result')=='SUCCESS' for r in info.get('consensus_data',{}).get('leader_receipt',[])):
         raise RuntimeError('Execution failure: '+label)
     if info['from_address'].lower()!=account.address.lower(): raise RuntimeError('Unexpected signer')

@@ -1,0 +1,7 @@
+{
+  "site": "https://sanshos1.github.io/merit-circuit/",
+  "contract": "0x79aAC36e444cDa73b845AE5129574Ea32e0ce7b5",
+  "observedRead": "LOAD EPOCH MC-OWNER-1788810754 returned APPEALED, score 85 and deadline 1788897162",
+  "browserWriteWorkflowVerified": false,
+  "note": "Observed through the published user interface; no other account keys or browser wallets were used."
+}
