@@ -71,8 +71,9 @@ class MeritCircuit(gl.Contract):
   if e.state!='OPEN':raise gl.vm.UserError('[EXPECTED] scoring unavailable')
   x=self._score(e)
   # The creation-time deadline cannot consume the subject's appeal opportunity.
-  # Preserve a later requested deadline, but always grant a full day after scoring.
-  e.appeal_deadline=u256(max(int(e.appeal_deadline),int(datetime.now(timezone.utc).timestamp())+86400))
+  # StudioNet demonstration minimum: ten minutes after scoring.
+  # A later requested deadline is preserved for longer review periods.
+  e.appeal_deadline=u256(max(int(e.appeal_deadline),int(datetime.now(timezone.utc).timestamp())+600))
   e.score=u256(x['score']);e.components=json.dumps(x['components']);e.digests=json.dumps(x['digests']);e.state='APPEAL_OPEN'
  @gl.public.write
  def appeal(self,i:str,evidence:str)->None:

@@ -17,7 +17,7 @@ Earlier mixed-account deployments are retired. Historical proofs in evidence/ret
 
 ## Contract behavior
 
-An epoch fixes its subject, scope and two configurable HTTPS evidence URLs. Validators check exact QUALITY (0-60), ADOPTION (0-40) and total values. Scoring grants at least 24 hours for the subject to appeal, even after a delayed score. Appeals are allowed through the stored deadline; finalization is permissionless strictly afterward. An appealed epoch is re-evaluated with its appeal evidence. Distinct source hosts alone do not prove independent ownership.
+An epoch fixes its subject, scope and two configurable HTTPS evidence URLs. Validators check exact QUALITY (0-60), ADOPTION (0-40) and total values. Scoring grants at least 10 minutes (StudioNet demo minimum) for the subject to appeal, even after a delayed score. Appeals are allowed through the stored deadline; finalization is permissionless strictly afterward. An appealed epoch is re-evaluated with its appeal evidence. Distinct source hosts alone do not prove independent ownership.
 
 ## Verification and use
 
