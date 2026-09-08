@@ -1,0 +1,77 @@
+{
+  "contract": "0x48B8995384E8340892554567965aA5910c69B380",
+  "wallet": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
+  "network": "StudioNet",
+  "transactions": {
+    "open": {
+      "hash": "0x1047dc5b161d3d1ba5eb15da30bb361184f9faab5427749bc3f82b2ef26da3db",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    },
+    "score": {
+      "hash": "0xdb0220dcf47b5ad1b9cd0182bc129284a14f15eb58140035beb4f31c1e6e46d4",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    },
+    "appeal": {
+      "hash": "0x84c8f6634924f90b7989e1752e1c58b6674e9fedd1a52bd29fe4b6121110c656",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    },
+    "finalize": {
+      "hash": "0x4246493d92e78e70e1c5a4041236b871a8d15239feb968f8c1de262252f4e58d",
+      "status": "FINALIZED",
+      "execution": "SUCCESS",
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    }
+  },
+  "sourceMatches": true,
+  "sourceSha256": "c939f7147f11c8a42b55db180ad5f83e2205bfbb08f9cdd385af2f75f66f0192",
+  "deploymentStatus": "FINALIZED",
+  "deploymentTx": "0xf3f6f1bf869336b131af91ccc3703108fe06a7244259b3f5c14928b58a33ec74",
+  "id": "MC-OWNER-1788879441",
+  "requestedDeadline": 1788879501,
+  "checks": {
+    "earlyFinalize": {
+      "hash": "0x61efe54b3462a0abbffe01fef6b3f7f6282e9a873c468cc65efad73cb7c85d95",
+      "status": "FINALIZED",
+      "expectedError": "appeal window still open",
+      "verified": true,
+      "signer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4"
+    }
+  },
+  "earlyFinalizePending": "0x61efe54b3462a0abbffe01fef6b3f7f6282e9a873c468cc65efad73cb7c85d95",
+  "state": {
+    "appeal": "https://github.com/sanshos1/merit-circuit/raw/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/appeal.txt",
+    "appealDeadline": 1788880080,
+    "components": [
+      {
+        "code": "ADOPTION",
+        "points": 35
+      },
+      {
+        "code": "QUALITY",
+        "points": 50
+      }
+    ],
+    "digests": [
+      "c6260f920de686f967e39ec526e4cb5e22d81f34b1daadd4877f7f8e4f75191b",
+      "6e2bb10aba1fd3759209b8c3d8d7c4c6473128a34bee1a4f758534a28beea0e7",
+      "ea2989352c836467ee49fb304d70ff7af4f6d4459d31e441d473e2422c664b70"
+    ],
+    "id": "MC-OWNER-1788879441",
+    "maintainer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
+    "scope": "Owner-only SDK contribution test",
+    "score": 85,
+    "sources": [
+      "https://raw.githubusercontent.com/sanshos1/merit-circuit/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/contribution.txt",
+      "https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@c97f9a6d5278d265e71c56db227527826a82f8de/evidence/attestation.txt"
+    ],
+    "state": "FINAL",
+    "subject": "0xad049e0edc298c97552ed60071a35bfc60181fd4"
+  },
+  "pendingFinalization": false
+}

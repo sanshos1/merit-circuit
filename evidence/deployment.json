@@ -5,7 +5,7 @@
   "deployer": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
   "sourceCommit": "0821a47de0908e94cb71ff643055c3467fb30b7e",
   "sourceSha256": "c939f7147f11c8a42b55db180ad5f83e2205bfbb08f9cdd385af2f75f66f0192",
-  "receiptStatus": "ACCEPTED",
+  "receiptStatus": "FINALIZED",
   "execution": "SUCCESS",
   "walletPolicy": "ACCOUNT_3 only"
 }

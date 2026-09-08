@@ -1,0 +1,12 @@
+{
+  "site": "https://sanshos1.github.io/merit-circuit/",
+  "contract": "0x48B8995384E8340892554567965aA5910c69B380",
+  "frontendRevision": "e832cc0bd5d0f3aac4d0b87a3da56811d4b80ad9",
+  "record": "MC-OWNER-1788879441",
+  "observedState": "FINAL",
+  "observedScore": 85,
+  "observedDeadline": 1788880080,
+  "durationLabel": "10 minutes (StudioNet demo minimum)",
+  "browserReadVerified": true,
+  "browserWriteWorkflowVerified": false
+}

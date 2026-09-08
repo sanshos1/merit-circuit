@@ -7,7 +7,7 @@
 - [Public application](https://sanshos1.github.io/merit-circuit/).
 - Deployment and actual-source verification: evidence/deployment.json and evidence/owner-network.json.
 
-New owner-only record MC-OWNER-1788879441 is being tested. Its creator and subject are both the sanshos1 wallet. Post-deadline finalization remains pending.
+New owner-only record MC-OWNER-1788879441 reached FINAL. Its creator and subject are both the sanshos1 wallet. Open, score, appeal and finalize transactions are all FINALIZED with successful execution. The public workbench reads FINAL with score 85. An attempted early finalize was rejected by the appeal guard.
 
 ## Account isolation
 

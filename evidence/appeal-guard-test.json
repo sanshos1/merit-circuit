@@ -1,0 +1,13 @@
+{
+  "date": "2026-09-08",
+  "sourceCommit": "0821a47de0908e94cb71ff643055c3467fb30b7e",
+  "normalSuite": {"passed": 7, "lintChecksPassed": 3},
+  "isolatedMutation": {
+    "change": "Removed the post-score deadline extension in an isolated local clone only",
+    "test": "score_tests/test_merit.py::test_delayed_score_starts_full_window",
+    "exitCode": 1,
+    "expectedFailure": "Stored creation deadline 1893456060 differed from required post-score deadline 1893629400",
+    "result": "The targeted regression detects the missing protection"
+  },
+  "productionSourceModifiedByMutation": false
+}
