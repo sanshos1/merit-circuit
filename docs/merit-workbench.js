@@ -1,6 +1,6 @@
 import { createAccount, createClient } from 'https://esm.sh/genlayer-js@1.1.8';
 import { studionet } from 'https://esm.sh/genlayer-js@1.1.8/chains';
-const ADDRESS='0x79aAC36e444cDa73b845AE5129574Ea32e0ce7b5', ENDPOINT='https://studio.genlayer.com/api';
+const ADDRESS='0x48B8995384E8340892554567965aA5910c69B380', ENDPOINT='https://studio.genlayer.com/api';
 let wallet,account;
 const reader=createClient({chain:studionet,endpoint:ENDPOINT,account:createAccount()});
 const root=document.createElement('main'); root.className='review-sheet';

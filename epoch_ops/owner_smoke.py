@@ -41,6 +41,22 @@ out.setdefault('requestedDeadline',int(time.time())+60);save()
 sources=['https://raw.githubusercontent.com/sanshos1/merit-circuit/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/contribution.txt','https://cdn.jsdelivr.net/gh/sanshos1/merit-circuit@c97f9a6d5278d265e71c56db227527826a82f8de/evidence/attestation.txt']
 send('open','open_epoch',[out['id'],account.address,'Owner-only SDK contribution test',sources,out['requestedDeadline']])
 send('score','score',[out['id']])
+state=client.read_contract(address=d['contract'],function_name='get_epoch',args=[out['id']])
+if 'earlyFinalize' not in out.get('checks',{}) and int(time.time())<state['appealDeadline']:
+    checks=out.setdefault('checks',{})
+    tx=out.get('earlyFinalizePending')
+    if not tx:
+        tx=client.write_contract(address=d['contract'],function_name='finalize',args=[out['id']])
+        out['earlyFinalizePending']=tx;save()
+    client.wait_for_transaction_receipt(transaction_hash=tx,status=TransactionStatus.FINALIZED,retries=120,interval=5000)
+    failed=client.get_transaction(transaction_hash=tx)
+    if failed['from_address'].lower()!=account.address.lower():raise RuntimeError('Unexpected signer')
+    if any(r.get('execution_result')=='SUCCESS' for r in failed.get('consensus_data',{}).get('leader_receipt',[])):
+        raise AssertionError('Early finalization unexpectedly succeeded')
+    if 'appeal window still open' not in json.dumps(failed,default=str):
+        raise RuntimeError('Rejection did not match the appeal guard')
+    checks['earlyFinalize']={'hash':tx,'status':failed['status_name'],'expectedError':'appeal window still open','verified':True,'signer':account.address}
+    save()
 send('appeal','appeal',[out['id'],'https://github.com/sanshos1/merit-circuit/raw/c97f9a6d5278d265e71c56db227527826a82f8de/evidence/appeal.txt'])
 state=client.read_contract(address=d['contract'],function_name='get_epoch',args=[out['id']])
 if int(time.time())>state['appealDeadline'] and state['state']!='FINAL':

@@ -1,0 +1,17 @@
+{
+  "account": "sanshos1",
+  "repository": "https://github.com/sanshos1/merit-circuit",
+  "contract": "0x48B8995384E8340892554567965aA5910c69B380",
+  "network": "StudioNet",
+  "contractSourceCommit": "0821a47de0908e94cb71ff643055c3467fb30b7e",
+  "contractSourceSha256": "c939f7147f11c8a42b55db180ad5f83e2205bfbb08f9cdd385af2f75f66f0192",
+  "explorer": "https://explorer-studio.genlayer.com/address/0x48B8995384E8340892554567965aA5910c69B380",
+  "publicSite": "https://sanshos1.github.io/merit-circuit/",
+  "wallet": "0xAD049E0Edc298C97552eD60071a35bfc60181FD4",
+  "walletPolicy": "ACCOUNT_3 only",
+  "liveRecord": "MC-OWNER-1788879441",
+  "minimumAppealSeconds": 600,
+  "purpose": "Short StudioNet demonstration; longer requested deadlines remain valid",
+  "browserWriteWorkflowVerified": false,
+  "submittedFormLinksVerified": false
+}
